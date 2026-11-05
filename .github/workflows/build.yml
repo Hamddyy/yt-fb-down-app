@@ -45,8 +45,9 @@ jobs:
             libffi-dev \
             libssl-dev
 
-    - name: Set up Android SDK and Tools (Including Aidl)
+    - name: Set up Android SDK and Pre-create Buildozer Paths
       run: |
+        # 1. تثبيت الـ SDK الأساسي يدوياً
         mkdir -p $HOME/android-sdk/cmdline-tools/latest
         wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
         unzip -q cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools/
@@ -59,9 +60,13 @@ jobs:
         yes | sdkmanager --licenses
         sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
         
-        # إنشاء رابط وهمي للأداة القديمة لضمان توافق Buildozer تماماً
-        mkdir -p $HOME/android-sdk/tools/bin
-        ln -s $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager $HOME/android-sdk/tools/bin/sdkmanager
+        # 2. إنشاء المسار الافتراضي الذي يبحث فيه Buildozer وربطه بـ SDK النظام
+        mkdir -p $HOME/.buildozer/android/platform/android-sdk
+        
+        # ربط مجلد build-tools مباشرة لضمان العثور على aidl
+        ln -s $HOME/android-sdk/build-tools $HOME/.buildozer/android/platform/android-sdk/build-tools
+        ln -s $HOME/android-sdk/platform-tools $HOME/.buildozer/android/platform/android-sdk/platform-tools
+        ln -s $HOME/android-sdk/platforms $HOME/.buildozer/android/platform/android-sdk/platforms
 
     - name: Install Buildozer and Cython
       run: |
@@ -76,5 +81,6 @@ jobs:
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: app-direct-apk
+        name: app-debug-apk
         path: bin/*.apk
+        
