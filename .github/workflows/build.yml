@@ -47,6 +47,11 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Accept Android SDK Licenses
+      run: |
+        mkdir -p $HOME/.android
+        touch $HOME/.android/repositories.cfg
+
     - name: Install Buildozer and Cython
       run: |
         pip install --upgrade pip
@@ -61,3 +66,4 @@ jobs:
       with:
         name: app-debug-apk
         path: bin/*.apk
+        
