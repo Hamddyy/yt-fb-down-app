@@ -50,3 +50,8 @@ log_level = 2
 
 # (int) Display warning if buildroot is in home directory (0 = False, 1 = DANGER)
 warn_on_root = 1
+[buildozer]
+log_level = 2
+warn_on_root = 1
+# زيادة مهلة التحميل لتجنب قطع الاتصال المفاجئ
+# (بعض الحزم الكبيرة تحتاج وقتاً وتحمل اتصالاً مستقراً)
