@@ -42,6 +42,12 @@ android.api = 33
 # (int) Minimum API level your app supports
 android.minapi = 21
 
+# (str) Android NDK version
+android.ndk = 25b
+
+# (str) Custom path to Android SDK
+android.sdk_path = /home/runner/android-sdk
+
 [buildozer]
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with color))
