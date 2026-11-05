@@ -57,7 +57,7 @@ jobs:
         export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
         
         yes | sdkmanager --licenses
-        sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2" "ndk;25b"
+        sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
         
         # إنشاء رابط وهمي للأداة القديمة لضمان توافق Buildozer تماماً
         mkdir -p $HOME/android-sdk/tools/bin
@@ -78,4 +78,3 @@ jobs:
       with:
         name: app-direct-apk
         path: bin/*.apk
-        
