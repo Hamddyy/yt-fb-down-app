@@ -9,6 +9,12 @@ package.name = ytdownloader
 # (str) Package domain (needed for android packaging)
 package.domain = org.downloader
 
+# (str) Source directory where the application files are located
+source.dir = .
+
+# (str) Application versioning (Required)
+version = 0.1
+
 # (list) Source files to include (let it match python files)
 source.include_exts = py,png,jpg,kv,atlas
 
@@ -23,13 +29,19 @@ source.exclude_dirs = tests bin
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,requests,yt-dlp,certifi,urllib3,idna,charset-normalizer,idna
+requirements = python3,requests,yt-dlp,certifi,urllib3,idna,charset-normalizer
 
 # (str) Supported orientations (landscape, sensor, portrait or all)
 orientation = portrait
 
 # (list) Permissions
 android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
+
+# (str) Supported API level (recommended to use latest stable)
+android.api = 33
+
+# (int) Minimum API level your app supports
+android.minapi = 21
 
 [buildozer]
 
