@@ -12,7 +12,7 @@ package.domain = org.downloader
 # (str) Source directory where the application files are located
 source.dir = .
 
-# (str) Application versioning (Required)
+# (str) Application versioning
 version = 0.1
 
 # (list) Source files to include (let it match python files)
@@ -28,7 +28,6 @@ source.include_dirs =
 source.exclude_dirs = tests bin
 
 # (list) Application requirements
-# comma separated e.g. requirements = sqlite3,kivy
 requirements = python3,requests,yt-dlp,certifi,urllib3,idna,charset-normalizer
 
 # (str) Supported orientations (landscape, sensor, portrait or all)
@@ -50,8 +49,3 @@ log_level = 2
 
 # (int) Display warning if buildroot is in home directory (0 = False, 1 = DANGER)
 warn_on_root = 1
-[buildozer]
-log_level = 2
-warn_on_root = 1
-# زيادة مهلة التحميل لتجنب قطع الاتصال المفاجئ
-# (بعض الحزم الكبيرة تحتاج وقتاً وتحمل اتصالاً مستقراً)
