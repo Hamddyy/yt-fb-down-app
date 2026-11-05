@@ -45,23 +45,24 @@ jobs:
             libffi-dev \
             libssl-dev
 
-    - name: Setup Buildozer SDK Bridge & Tools
+    - name: Setup exact SDK structure for Buildozer
       run: |
-        # 1. إنشاء مجلد الـ SDK الخاص بـ Buildozer مسبقاً
-        mkdir -p $HOME/.buildozer/android/platform/android-sdk
+        # 1. إنشاء المسار الافتراضي الذي يبحث فيه Buildozer بدقة
+        SDK_DIR=$HOME/.buildozer/android/platform/android-sdk
+        mkdir -p $SDK_DIR/tools/bin
         
-        # 2. تحميل أدوات أندرويد الحديثة
+        # 2. تحميل أدوات سطر الأوامر وفكها مباشرة داخل مجلد tools القديم ليتطابق مع طلب البناء
         wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
-        unzip -q cmdline-tools.zip -d $HOME/android-sdk/
-        rm cmdline-tools.zip
+        unzip -q cmdline-tools.zip -d temp_tools
         
-        # 3. ربط الهيكل القديم الذي يطلبه Buildozer بالهيكل الحديث عبر Symlink ذكي لضمان توافق المسارات و الـ lib
-        ln -s $HOME/android-sdk/cmdline-tools $HOME/.buildozer/android/platform/android-sdk/cmdline-tools
-        ln -s $HOME/android-sdk/cmdline-tools/latest $HOME/.buildozer/android/platform/android-sdk/tools
+        # نقل المحتويات لتتوافق مع الهيكل القديم (tools/bin/sdkmanager)
+        cp -r temp_tools/cmdline-tools/bin/* $SDK_DIR/tools/bin/
+        cp -r temp_tools/cmdline-tools/lib $SDK_DIR/tools/
+        rm -rf cmdline-tools.zip temp_tools
         
-        # 4. ضبط مسارات البيئة وترخيص الأدوات
-        export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
-        export PATH=$PATH:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+        # 3. قبول التراخيص وتشغيل التثبيت التلقائي للأدوات اللازمة عبر الهيكل المنشأ
+        export ANDROID_HOME=$SDK_DIR
+        export PATH=$PATH:$SDK_DIR/tools/bin:$SDK_DIR/platform-tools
         
         yes | sdkmanager --licenses || true
         sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2" || true
@@ -81,4 +82,3 @@ jobs:
       with:
         name: app-debug-apk
         path: bin/*.apk
-        
