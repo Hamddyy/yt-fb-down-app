@@ -1,0 +1,23 @@
+[project]
+name = "ytdl-manager"
+version = "1.0.0"
+description = "مدير تحميلات يوتيوب وفيسبوك"
+requires-python = ">=3.10"
+dependencies = [
+  "flet==0.28.3",
+  "yt-dlp",
+]
+
+[tool.flet]
+org = "com.mydownloader"
+product = "مدير التحميلات"
+company = "Me"
+copyright = "Me"
+
+[tool.flet.app]
+path = "src"
+
+[tool.flet.android.permission]
+"android.permission.INTERNET" = true
+"android.permission.WRITE_EXTERNAL_STORAGE" = true
+"android.permission.READ_EXTERNAL_STORAGE" = true
